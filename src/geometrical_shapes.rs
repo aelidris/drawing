@@ -218,13 +218,13 @@ pub struct Circle {
 }
 
 impl Circle {
-    pub fn new(center: &Point, radius: i32) -> Self {
-        Circle {
-            center: center.clone(),
-            radius,
-            color: Color::rgb(255, 0, 255), // Magenta by default
-        }
-    }
+    // pub fn new(center: &Point, radius: i32) -> Self {
+    //     Circle {
+    //         center: center.clone(),
+    //         radius,
+    //         color: Color::rgb(255, 0, 255), // Magenta by default
+    //     }
+    // }
 
     pub fn random(width: i32, height: i32) -> Self {
         let mut rng = rand::thread_rng();
