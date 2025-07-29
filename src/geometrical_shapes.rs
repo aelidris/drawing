@@ -22,7 +22,7 @@ impl Point {
         Point {
             x,
             y,
-            color: Color::rgb(255, 0, 0), // Red by default
+            color: Color::rgb(255, 0, 0),
         }
     }
 
@@ -34,7 +34,7 @@ impl Point {
             color: Color::rgb(
                 rng.gen_range(0..=255),
                 rng.gen_range(0..=255),
-                rng.gen_range(0..=255),
+                rng.gen_range(0..=255)
             ),
         }
     }
@@ -62,7 +62,7 @@ impl Line {
         Line {
             start: start.clone(),
             end: end.clone(),
-            color: Color::rgb(0, 255, 0), // Green by default
+            color: Color::rgb(0, 255, 0),
         }
     }
 
@@ -74,7 +74,7 @@ impl Line {
             color: Color::rgb(
                 rng.gen_range(0..=255),
                 rng.gen_range(0..=255),
-                rng.gen_range(0..=255),
+                rng.gen_range(0..=255)
             ),
         }
     }
@@ -136,7 +136,7 @@ impl Triangle {
             p1: p1.clone(),
             p2: p2.clone(),
             p3: p3.clone(),
-            color: Color::rgb(0, 0, 255), // Blue by default
+            color: Color::rgb(0, 0, 255),
         }
     }
 }
@@ -174,11 +174,11 @@ impl Rectangle {
         // Determine which point is top-left and which is bottom-right
         let top_left = Point::new(p1.x.min(p2.x), p1.y.min(p2.y));
         let bottom_right = Point::new(p1.x.max(p2.x), p1.y.max(p2.y));
-        
+
         Rectangle {
             top_left,
             bottom_right,
-            color: Color::rgb(255, 255, 0), // Yellow by default
+            color: Color::rgb(255, 255, 0),
         }
     }
 }
@@ -222,7 +222,7 @@ impl Circle {
     //     Circle {
     //         center: center.clone(),
     //         radius,
-    //         color: Color::rgb(255, 0, 255), // Magenta by default
+    //         color: Color::rgb(255, 0, 255),
     //     }
     // }
 
@@ -234,7 +234,7 @@ impl Circle {
             color: Color::rgb(
                 rng.gen_range(0..=255),
                 rng.gen_range(0..=255),
-                rng.gen_range(0..=255),
+                rng.gen_range(0..=255)
             ),
         }
     }
