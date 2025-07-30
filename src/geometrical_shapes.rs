@@ -10,7 +10,7 @@ pub trait Displayable {
     fn display(&mut self, x: i32, y: i32, color: Color);
 }
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct Point {
     pub x: i32,
     pub y: i32,
@@ -50,7 +50,6 @@ impl Drawable for Point {
     }
 }
 
-#[derive(Debug)]
 pub struct Line {
     start: Point,
     end: Point,
@@ -122,7 +121,6 @@ impl Drawable for Line {
     }
 }
 
-#[derive(Debug)]
 pub struct Triangle {
     p1: Point,
     p2: Point,
@@ -162,7 +160,6 @@ impl Drawable for Triangle {
     }
 }
 
-#[derive(Debug)]
 pub struct Rectangle {
     point1: Point,
     point2: Point,
@@ -209,7 +206,6 @@ impl Drawable for Rectangle {
     }
 }
 
-#[derive(Debug)]
 pub struct Circle {
     center: Point,
     radius: i32,
