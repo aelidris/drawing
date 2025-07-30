@@ -1,5 +1,5 @@
 use rand::Rng;
-use raster::{Color, Image};
+use raster::{ Color, Image };
 
 pub trait Drawable {
     fn draw(&self, image: &mut Image);
@@ -93,7 +93,6 @@ impl Line {
         let mut err = dx - dy;
 
         loop {
-            
             image.display(x0, y0, self.color.clone());
 
             if x0 == x1 && y0 == y1 {
@@ -137,7 +136,7 @@ impl Triangle {
             p1: p1.clone(),
             p2: p2.clone(),
             p3: p3.clone(),
-            color: Color::rgb(0, 0, 255),
+            color: Color::rgb(255, 255, 255),
         }
     }
 }
@@ -178,7 +177,7 @@ impl Rectangle {
         Rectangle {
             point1,
             point2,
-            color: Color::rgb(255, 255, 0),
+            color: Color::rgb(255, 255, 255),
         }
     }
 }
@@ -222,7 +221,7 @@ impl Circle {
         let mut rng = rand::thread_rng();
         Circle {
             center: Point::new(rng.gen_range(0..width), rng.gen_range(0..height)),
-            radius: rng.gen_range(5..50),
+            radius: rng.gen_range(50..350),
             color: Color::rgb(
                 rng.gen_range(0..=255),
                 rng.gen_range(0..=255),
