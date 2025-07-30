@@ -164,20 +164,19 @@ impl Drawable for Triangle {
 
 #[derive(Debug)]
 pub struct Rectangle {
-    top_left: Point,
-    bottom_right: Point,
+    point1: Point,
+    point2: Point,
     color: Color,
 }
 
 impl Rectangle {
     pub fn new(p1: &Point, p2: &Point) -> Self {
-        // Determine which point is top-left and which is bottom-right
-        let top_left = Point::new(p1.x.min(p2.x), p1.y.min(p2.y));
-        let bottom_right = Point::new(p1.x.max(p2.x), p1.y.max(p2.y));
+        let point1 = Point::new(p1.x, p1.y);
+        let point2 = Point::new(p2.x, p2.y);
 
         Rectangle {
-            top_left,
-            bottom_right,
+            point1,
+            point2,
             color: Color::rgb(255, 255, 0),
         }
     }
@@ -185,14 +184,14 @@ impl Rectangle {
 
 impl Drawable for Rectangle {
     fn draw<T: Displayable>(&self, display: &mut T) {
-        let top_right = Point::new(self.bottom_right.x, self.top_left.y);
-        let bottom_left = Point::new(self.top_left.x, self.bottom_right.y);
+        let top_right = Point::new(self.point2.x, self.point1.y);
+        let bottom_left = Point::new(self.point1.x, self.point2.y);
 
         // Draw the four sides of the rectangle
-        let mut line1 = Line::new(&self.top_left, &top_right);
-        let mut line2 = Line::new(&top_right, &self.bottom_right);
-        let mut line3 = Line::new(&self.bottom_right, &bottom_left);
-        let mut line4 = Line::new(&bottom_left, &self.top_left);
+        let mut line1 = Line::new(&self.point1, &top_right);
+        let mut line2 = Line::new(&top_right, &self.point2);
+        let mut line3 = Line::new(&self.point2, &bottom_left);
+        let mut line4 = Line::new(&bottom_left, &self.point1);
 
         line1.color = self.color.clone();
         line2.color = self.color.clone();
@@ -218,14 +217,6 @@ pub struct Circle {
 }
 
 impl Circle {
-    // pub fn new(center: &Point, radius: i32) -> Self {
-    //     Circle {
-    //         center: center.clone(),
-    //         radius,
-    //         color: Color::rgb(255, 0, 255),
-    //     }
-    // }
-
     pub fn random(width: i32, height: i32) -> Self {
         let mut rng = rand::thread_rng();
         Circle {
