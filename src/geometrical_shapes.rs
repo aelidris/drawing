@@ -2,7 +2,7 @@ use rand::Rng;
 use raster::Color;
 
 pub trait Drawable {
-    fn draw<T: Displayable>(&self, display: &mut T);
+    fn draw(&self, display: &mut dyn Displayable);
     fn color(&self) -> Color;
 }
 
@@ -41,7 +41,7 @@ impl Point {
 }
 
 impl Drawable for Point {
-    fn draw<T: Displayable>(&self, display: &mut T) {
+    fn draw(&self, display: &mut dyn Displayable) {
         display.display(self.x, self.y, self.color.clone());
     }
 
@@ -80,7 +80,7 @@ impl Line {
     }
 
     // Bresenham's line algorithm
-    fn draw_line<T: Displayable>(&self, display: &mut T) {
+    fn draw_line(&self, display: &mut dyn Displayable) {
         let mut x0 = self.start.x;
         let mut y0 = self.start.y;
         let x1 = self.end.x;
@@ -113,7 +113,7 @@ impl Line {
 }
 
 impl Drawable for Line {
-    fn draw<T: Displayable>(&self, display: &mut T) {
+    fn draw(&self, display: &mut dyn Displayable) {
         self.draw_line(display);
     }
 
@@ -142,7 +142,7 @@ impl Triangle {
 }
 
 impl Drawable for Triangle {
-    fn draw<T: Displayable>(&self, display: &mut T) {
+    fn draw(&self, display: &mut dyn Displayable) {
         // Draw the three sides of the triangle
         let line1 = Line::new(&self.p1, &self.p2);
         let line2 = Line::new(&self.p2, &self.p3);
@@ -183,7 +183,7 @@ impl Rectangle {
 }
 
 impl Drawable for Rectangle {
-    fn draw<T: Displayable>(&self, display: &mut T) {
+    fn draw(&self, display: &mut dyn Displayable) {
         let top_right = Point::new(self.point2.x, self.point1.y);
         let bottom_left = Point::new(self.point1.x, self.point2.y);
 
@@ -231,7 +231,7 @@ impl Circle {
     }
 
     // Midpoint circle algorithm
-    fn draw_circle<T: Displayable>(&self, display: &mut T) {
+    fn draw_circle(&self, display: &mut dyn Displayable) {
         let cx = self.center.x;
         let cy = self.center.y;
         let r = self.radius;
@@ -263,7 +263,7 @@ impl Circle {
 }
 
 impl Drawable for Circle {
-    fn draw<T: Displayable>(&self, display: &mut T) {
+    fn draw(&self, display: &mut dyn Displayable) {
         self.draw_circle(display);
     }
 
