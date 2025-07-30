@@ -1,8 +1,8 @@
 use rand::Rng;
-use raster::Color;
+use raster::{Color, Image};
 
 pub trait Drawable {
-    fn draw(&self, display: &mut dyn Displayable);
+    fn draw(&self, image: &mut Image);
     fn color(&self) -> Color;
 }
 
@@ -41,8 +41,8 @@ impl Point {
 }
 
 impl Drawable for Point {
-    fn draw(&self, display: &mut dyn Displayable) {
-        display.display(self.x, self.y, self.color.clone());
+    fn draw(&self, image: &mut Image) {
+        image.display(self.x, self.y, self.color.clone());
     }
 
     fn color(&self) -> Color {
@@ -80,7 +80,7 @@ impl Line {
     }
 
     // Bresenham's line algorithm
-    fn draw_line(&self, display: &mut dyn Displayable) {
+    fn draw_line(&self, image: &mut Image) {
         let mut x0 = self.start.x;
         let mut y0 = self.start.y;
         let x1 = self.end.x;
@@ -93,7 +93,8 @@ impl Line {
         let mut err = dx - dy;
 
         loop {
-            display.display(x0, y0, self.color.clone());
+            
+            image.display(x0, y0, self.color.clone());
 
             if x0 == x1 && y0 == y1 {
                 break;
@@ -113,8 +114,8 @@ impl Line {
 }
 
 impl Drawable for Line {
-    fn draw(&self, display: &mut dyn Displayable) {
-        self.draw_line(display);
+    fn draw(&self, image: &mut Image) {
+        self.draw_line(image);
     }
 
     fn color(&self) -> Color {
@@ -142,7 +143,7 @@ impl Triangle {
 }
 
 impl Drawable for Triangle {
-    fn draw(&self, display: &mut dyn Displayable) {
+    fn draw(&self, image: &mut Image) {
         // Draw the three sides of the triangle
         let line1 = Line::new(&self.p1, &self.p2);
         let line2 = Line::new(&self.p2, &self.p3);
@@ -152,9 +153,9 @@ impl Drawable for Triangle {
         let temp_line2 = Line { start: line2.start, end: line2.end, color: self.color.clone() };
         let temp_line3 = Line { start: line3.start, end: line3.end, color: self.color.clone() };
 
-        temp_line1.draw(display);
-        temp_line2.draw(display);
-        temp_line3.draw(display);
+        temp_line1.draw(image);
+        temp_line2.draw(image);
+        temp_line3.draw(image);
     }
 
     fn color(&self) -> Color {
@@ -183,7 +184,7 @@ impl Rectangle {
 }
 
 impl Drawable for Rectangle {
-    fn draw(&self, display: &mut dyn Displayable) {
+    fn draw(&self, image: &mut Image) {
         let top_right = Point::new(self.point2.x, self.point1.y);
         let bottom_left = Point::new(self.point1.x, self.point2.y);
 
@@ -198,10 +199,10 @@ impl Drawable for Rectangle {
         line3.color = self.color.clone();
         line4.color = self.color.clone();
 
-        line1.draw(display);
-        line2.draw(display);
-        line3.draw(display);
-        line4.draw(display);
+        line1.draw(image);
+        line2.draw(image);
+        line3.draw(image);
+        line4.draw(image);
     }
 
     fn color(&self) -> Color {
@@ -231,7 +232,7 @@ impl Circle {
     }
 
     // Midpoint circle algorithm
-    fn draw_circle(&self, display: &mut dyn Displayable) {
+    fn draw_circle(&self, image: &mut Image) {
         let cx = self.center.x;
         let cy = self.center.y;
         let r = self.radius;
@@ -242,14 +243,14 @@ impl Circle {
 
         while x <= y {
             // Draw 8 octants
-            display.display(cx + x, cy + y, self.color.clone());
-            display.display(cx - x, cy + y, self.color.clone());
-            display.display(cx + x, cy - y, self.color.clone());
-            display.display(cx - x, cy - y, self.color.clone());
-            display.display(cx + y, cy + x, self.color.clone());
-            display.display(cx - y, cy + x, self.color.clone());
-            display.display(cx + y, cy - x, self.color.clone());
-            display.display(cx - y, cy - x, self.color.clone());
+            image.display(cx + x, cy + y, self.color.clone());
+            image.display(cx - x, cy + y, self.color.clone());
+            image.display(cx + x, cy - y, self.color.clone());
+            image.display(cx - x, cy - y, self.color.clone());
+            image.display(cx + y, cy + x, self.color.clone());
+            image.display(cx - y, cy + x, self.color.clone());
+            image.display(cx + y, cy - x, self.color.clone());
+            image.display(cx - y, cy - x, self.color.clone());
 
             if d < 0 {
                 d += 2 * x + 3;
@@ -263,8 +264,8 @@ impl Circle {
 }
 
 impl Drawable for Circle {
-    fn draw(&self, display: &mut dyn Displayable) {
-        self.draw_circle(display);
+    fn draw(&self, image: &mut Image) {
+        self.draw_circle(image);
     }
 
     fn color(&self) -> Color {
